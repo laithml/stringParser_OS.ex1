@@ -16,11 +16,14 @@ int main() {
         int charCount = 0, wordCount = 0;
         printf("Enter string, or \"exit\" to end program:\n");
         gets(str);
+        if (strlen(str) > 510) {
+            printf("error you enter larger than 510 letters");
+            break;
+        }
         if (strcmp(str, "exit") == 0) break;
-        else if (strcmp(str, "history") == 0) {
-
+        else if (strcmp(str, "history") == 0)
             history();
-        } else {
+        else {
             count(str, &charCount, &wordCount);
 
             printf("%d words\n%d chars\n", wordCount, charCount);
@@ -59,43 +62,47 @@ int countLine() {
 void count(char str[], int *charCount, int *wordCount) {
     FILE *writeFile;
     writeFile = fopen("history.txt", "a");
-    int lineCounter=countLine();
+    int lineCounter = countLine();
     int i = 0;
     int len = strlen(str);
     char *word;
-    int start=0;
-    int end=0;
-    fprintf(writeFile,"%d: ",lineCounter);
-    while (i < len+1) {
-        if(end!=0){
-            int length=(end-start+1);
-            word=(char*) malloc (sizeof(char)*length);
-            strncpy(word,&str[start],length);
+    int start = 0;
+    int end = 0;
+    fprintf(writeFile, "%d: ", lineCounter);
+    while (i < len + 1) {
+        if (end != 0) {
+            int length = (end - start + 1);
+            word = (char *) malloc(sizeof(char) * length);
+            if (word == NULL) {
+                printf("error can't allocate space in memory");
+            } else {
+                strncpy(word, &str[start], length);
 
-            fprintf(writeFile,"%s",word);
-            free(word);
+                fprintf(writeFile, "%s", word);
+                free(word);
 
-
-            end=0;
+            }
+            end = 0;
         }
-        if(i>0&&str[i]!=' '&&str[i-1]==' ')
-            start=i;
-        if(str[i]!=' '&&(str[i+1]==' '||str[i+1]=='\0'))
-            end=i;
+        if (i > 0 && str[i] != ' ' && str[i - 1] == ' ')
+            start = i;
+        if (str[i] != ' ' && (str[i + 1] == ' ' || str[i + 1] == '\0'))
+            end = i;
 
-        if (str[i] != ' '){
+        if (str[i] != ' ') {
             (*charCount)++;
-        }
-        else if ((*charCount)!=0 &&str[i + 1] != ' ' && str[i + 1] != '\0'){
+        } else if ((*charCount) != 0 && str[i + 1] != ' ' && str[i + 1] != '\0') {
             (*wordCount)++;
-            fprintf(writeFile,"%c",str[i]);
-        }
+            fprintf(writeFile, "%c", str[i]);
+        } else
+            fprintf(writeFile, "%c", str[i]);
+
         i++;
     }
-    fprintf(writeFile,"\n");
+    fprintf(writeFile, "\n");
 
-    if((*charCount)>1)
-    (*wordCount)++;
+    if ((*charCount) > 1)
+        (*wordCount)++;
 
 
     fclose(writeFile);
