@@ -1,3 +1,4 @@
+//211353297
 #include <stdio.h>
 #include <string.h>
 
@@ -10,7 +11,7 @@ int countLine();
 int main() {
     char str[512];//I added 2 to the length because there's '\n\0' at the end of the str
     FILE *writeFile;
-    writeFile = fopen("history.txt", "a");
+    writeFile = fopen("file.txt", "a");
     if(writeFile==NULL){
         perror("cant create a new file");
         return 1;
@@ -25,7 +26,7 @@ int main() {
             else if (strcmp(str, "history") == 0) {
                 fclose(writeFile);//close the file to save every input before "history" to the file, to can read it in the history function
                 history();
-                writeFile = fopen("history.txt", "a");//open the file again to continue to append new input in it
+                writeFile = fopen("file.txt", "a");//open the file again to continue to append new input in it
             } else {
                 const char *word = count(str, &charCount, &wordCount);
                 if (wordCount != 0) {
@@ -34,7 +35,7 @@ int main() {
                     else if (wordCount == 1 && strcmp(word, "history") == 0) {
                         fclose(writeFile);
                         history();
-                        writeFile = fopen("history.txt", "a");
+                        writeFile = fopen("file.txt", "a");
                     } else {
                         printf("%d words\n%d chars\n", wordCount, charCount);
                         fprintf(writeFile, "%d: %s\n", i, str);
@@ -52,7 +53,7 @@ int main() {
 
 void history() {
     FILE *readFile;
-    readFile = fopen("history.txt", "r");
+    readFile = fopen("file.txt", "r");
     if (readFile == NULL) {
         perror("file doesn't exist");
     } else {
@@ -69,7 +70,7 @@ int countLine() {
     //count how many lines in the file
     int counter = 0;
     FILE *readFile;
-    readFile = fopen("history.txt", "r");
+    readFile = fopen("file.txt", "r");
     if (readFile == NULL) {
         perror("file doesn't exist");
     } else {

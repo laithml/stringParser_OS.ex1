@@ -5,11 +5,11 @@ Authored by Laith Al-mouhtaseb
 ==Description==
 The program start in infinite loop that stopped when the user enter "exit" to the input,
 The program get a string input from the user and count how many words and letters in the words
-after that save the input string in a text file I named "history.txt",
+after that save the input string in a text file I named "file.txt",
 and if the user entered "history",the program print all the strings that the user have entered it.
 
 functions:
-history: its void function with no input args, that open the txt file "history.txt" and print the file to the console.
+history: its void function with no input args, that open the txt file "file.txt" and print the file to the console.
 
 count: the parameters that require it is  string, pointer of int and another pointer of int, and return a string,
 the function edit the value of the two ints that were given to it,it takes ints by reference.
